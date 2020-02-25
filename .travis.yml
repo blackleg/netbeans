@@ -507,6 +507,15 @@ matrix:
             - ant $OPTS clean
             - ant $OPTS build
           script:
+            - ant $OPTS -f enterprise/api.web.webmodule test
+            - ant $OPTS -f enterprise/cloud.amazon test
+            - ant $OPTS -f enterprise/el.lexer test
+            - ant $OPTS -f enterprise/glassfish.common test
+            #- ant $OPTS -f enterprise/glassfish.eecommon test
+            #- ant $OPTS -f enterprise/glassfish.javaee test
+            #- ant $OPTS -f enterprise/glassfish.tooling test
+            - ant $OPTS -f enterprise/j2ee.api.ejbmodule test
+            - ant $OPTS -f enterprise/j2ee.clientproject test
             - ant $OPTS -f enterprise/spring.webmvc test
             
         - name: Test groovy modules
