@@ -19,11 +19,13 @@
 
 pipeline {
     
-    agent { 
-        node { 
-            label 'ubuntu' 
-        } 
-    }
+    agent any
+    
+//    agent { 
+//        node { 
+//            label 'ubuntu' 
+//        } 
+//    }
     
     stages {
         
