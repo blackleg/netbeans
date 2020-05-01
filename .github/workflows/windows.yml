@@ -27,6 +27,9 @@ jobs:
   build:
 
     runs-on: windows-2019
+    
+    env:
+      OPTS: "-Dcluster.config=full"
 
     steps:
     - uses: actions/checkout@v2
@@ -35,6 +38,10 @@ jobs:
       with:
         java-version: 1.8
     - name: Clean
-      run: ant clean
+      run: ant $OPTS clean
     - name: Build
-      run: ant build
+      run: ant $OPTS build
+    - name: Test
+      run: |
+        - ant $OPTS -f platform/core.network test
+        - ant $OPTS -f platform/core.network test
