@@ -54,6 +54,14 @@ pipeline {
             }
         }
         
+        stage("Code Quality") {
+            steps {
+                withAnt(installation: 'Ant 1.9 (latest)') { 
+                    sh "ls"
+                }
+            }
+        }
+        
     }
     
 }
