@@ -28,7 +28,9 @@ pipeline {
     stages {
         
         stage("Clean") {
-            sh 'ant clean'
+            steps {
+                sh 'ant clean'
+            }
         }
         
     }
