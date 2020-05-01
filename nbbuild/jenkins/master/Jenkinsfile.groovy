@@ -21,22 +21,35 @@ pipeline {
     
     agent any
     
-    tools {
-        jdk 'JDK 1.8 (latest)'
-    } 
-    
     //    agent { 
     //        node { 
     //            label 'ubuntu' 
     //        } 
     //    }
     
+    environment {
+        OPTS = '-Dcluster.config=full -Djavac.compilerargs=-nowarn -Dbuild.compiler.deprecation=false'
+    }
+    
+    tools {
+        jdk 'JDK 1.8 (latest)'
+    } 
+    
     stages {
         
         stage("Clean") {
             steps {
                 withAnt(installation: 'Ant 1.9 (latest)') { 
-                    sh 'ant clean'
+                    sh "ant $OPTS clean"
+                }
+            }
+        }
+        
+        stage("Build") {
+            steps {
+                withAnt(installation: 'Ant 1.9 (latest)') { 
+                    sh "ant $OPTS build"
+                    sh "ant $OPTS test -Dtest.includes=NoTestsJustBuild"
                 }
             }
         }
