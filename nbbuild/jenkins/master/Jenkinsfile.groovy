@@ -21,17 +21,23 @@ pipeline {
     
     agent any
     
-//    agent { 
-//        node { 
-//            label 'ubuntu' 
-//        } 
-//    }
+    tools {
+        jdk 'JDK 1.8 (latest)'
+    } 
+    
+    //    agent { 
+    //        node { 
+    //            label 'ubuntu' 
+    //        } 
+    //    }
     
     stages {
         
         stage("Clean") {
             steps {
-                sh 'ant clean'
+                withAnt(installation: 'Ant 1.9 (latest)') { 
+                    sh 'ant clean'
+                }
             }
         }
         
