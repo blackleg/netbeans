@@ -42,10 +42,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.netbeans.modules.notifications.NotificationImpl;
 import org.netbeans.modules.notifications.NotificationSettings;
 import org.netbeans.modules.notifications.Utils;
 import org.netbeans.modules.notifications.spi.Notification;
+import org.netbeans.modules.notifications.tool.NotificationGeneratorActionListener;
 import org.netbeans.swing.etable.ETable;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -129,9 +129,19 @@ public final class NotificationCenterTopComponent extends TopComponent {
         });
         toolBar.add(btnSearch);
         toolBar.add(new FiltersMenuButton(notificationManager.getActiveFilter()));
+        
+        if (addButtonForNotificationGenerator()) {
+            ShowNotificationGeneratorMenuButton showNotificationGeneratorMenuButton = ShowNotificationGeneratorMenuButton.getInstance();
+            showNotificationGeneratorMenuButton.addActionListener(NotificationGeneratorActionListener.getInstance());
+            toolBar.add(showNotificationGeneratorMenuButton);
+        }
 
         initLeft();
         showDetails();
+    }
+    
+    private boolean addButtonForNotificationGenerator() {
+        return Boolean.getBoolean("org.netbeans.modules.notifications.tool.enabled") || Boolean.getBoolean("netbeans.full.hack");
     }
 
     private void initLeft() {
