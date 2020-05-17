@@ -16,23 +16,37 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.netbeans.modules.notifications.center;
+package org.netbeans.modules.notifications.tool;
 
-import javax.swing.JButton;
-import org.openide.util.ImageUtilities;
+import java.awt.event.ActionEvent;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.netbeans.junit.NbTestCase;
 
 /**
  *
  * @author Hector Espert
  */
-public class ShowNotificationGeneratorMenuButton extends JButton {
+public class DevelopmentToolMenuButtonActionListenerTest extends NbTestCase {
     
-    public ShowNotificationGeneratorMenuButton() {
-        super(ImageUtilities.loadImageIcon("org/netbeans/modules/notifications/resources/notifications.png", true));
+    private DevelopmentToolMenuButtonActionListener actionListener;
+
+    public DevelopmentToolMenuButtonActionListenerTest(String name) {
+        super(name);
     }
 
-    public static ShowNotificationGeneratorMenuButton getInstance() {
-        return new ShowNotificationGeneratorMenuButton();
+    @Override
+    protected void setUp() throws Exception {
+        actionListener = DevelopmentToolMenuButtonActionListener.getInstance();
     }
 
+    @Test
+    public void testActionPerformed() {
+        //actionListener.actionPerformed(null);
+    }
+    
 }

@@ -35,7 +35,7 @@ import org.openide.util.NbBundle;
  *
  * @author Hector Espert
  */
-public class NotificationGeneratorActionListener implements ActionListener {
+public class DevelopmentToolMenuButtonActionListener implements ActionListener {
    
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -61,8 +61,8 @@ public class NotificationGeneratorActionListener implements ActionListener {
         }
     }
     
-    public static NotificationGeneratorActionListener getInstance() {
-        return new NotificationGeneratorActionListener();
+    public static DevelopmentToolMenuButtonActionListener getInstance() {
+        return new DevelopmentToolMenuButtonActionListener();
     }
     
 }

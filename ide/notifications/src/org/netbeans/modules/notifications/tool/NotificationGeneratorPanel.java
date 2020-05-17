@@ -28,7 +28,7 @@ import org.openide.util.ImageUtilities;
 
 /**
  *
- * @author hector
+ * @author Hector Espert
  */
 public class NotificationGeneratorPanel extends javax.swing.JPanel {
 

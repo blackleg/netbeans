@@ -18,6 +18,7 @@
  */
 package org.netbeans.modules.notifications.center;
 
+import org.netbeans.modules.notifications.tool.DevelopmentToolMenuButton;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -45,7 +46,7 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.netbeans.modules.notifications.NotificationSettings;
 import org.netbeans.modules.notifications.Utils;
 import org.netbeans.modules.notifications.spi.Notification;
-import org.netbeans.modules.notifications.tool.NotificationGeneratorActionListener;
+import org.netbeans.modules.notifications.tool.DevelopmentToolMenuButtonActionListener;
 import org.netbeans.swing.etable.ETable;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -130,17 +131,18 @@ public final class NotificationCenterTopComponent extends TopComponent {
         toolBar.add(btnSearch);
         toolBar.add(new FiltersMenuButton(notificationManager.getActiveFilter()));
         
-        if (addButtonForNotificationGenerator()) {
-            ShowNotificationGeneratorMenuButton showNotificationGeneratorMenuButton = ShowNotificationGeneratorMenuButton.getInstance();
-            showNotificationGeneratorMenuButton.addActionListener(NotificationGeneratorActionListener.getInstance());
-            toolBar.add(showNotificationGeneratorMenuButton);
+        // Add button to show notification generator dialog on development environment.
+        if (isDevelopmentToolEnabled()) {
+            DevelopmentToolMenuButton developmentToolMenuButton = DevelopmentToolMenuButton.getInstance();
+            developmentToolMenuButton.addActionListener(DevelopmentToolMenuButtonActionListener.getInstance());
+            toolBar.add(developmentToolMenuButton);
         }
 
         initLeft();
         showDetails();
     }
     
-    private boolean addButtonForNotificationGenerator() {
+    private boolean isDevelopmentToolEnabled() {
         return Boolean.getBoolean("org.netbeans.modules.notifications.tool.enabled") || Boolean.getBoolean("netbeans.full.hack");
     }
 
