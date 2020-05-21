@@ -23,15 +23,27 @@ import javax.swing.JComponent;
 import org.openide.awt.NotificationDisplayer;
 
 /**
- *  
+ * Represents a notification that can be managed in a @see NotificationCenterManager
  * @author Hector Espert
  */
 public abstract class Notification extends org.openide.awt.Notification implements Comparable<Notification> {
 
+    /**
+     * Get notification priority.
+     * @return NotificationDisplayer.Priority
+     */
     public abstract NotificationDisplayer.Priority getPriority();
     
+    /**
+     * Get notification category.
+     * @return NotificationDisplayer.Category
+     */
     public abstract NotificationDisplayer.Category getCategory();
     
+    /**
+     * Notification title.
+     * @return String
+     */
     public abstract String getTitle();
     
     public abstract void setNotificationListener(NotificationListener notificationListener);
