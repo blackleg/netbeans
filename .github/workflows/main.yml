@@ -27,18 +27,32 @@ jobs:
   linux:
     name: Linux tests
     runs-on: ubuntu-16.04
+    env: 
+      OPTS: "-Dtest-unit-sys-prop.ignore.random.failures=true -Dvanilla.javac.exists=true"
     steps:
       - uses: actions/checkout@v2
       - name: Clean
         run: ant clean
+        
       - name: Build
         run: ant build
-      - name: SonarCloud Scan
-        if: github.repository == 'hectorespert/netbeans'
-        uses: SonarSource/sonarcloud-github-action@v1.1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        
+      - name: Build tests
+        run: ant test -Dtest.includes=NoTestsJustBuild
+        
+      - name: Test harness modules
+        run: |
+          - ant $OPTS -f harness/o.n.insane test
+          - ant $OPTS -f harness/apisupport.harness test
+          - ant $OPTS -f harness/nbjunit test
+          - ant $OPTS -f harness/jellytools.platform test -Dtest.config=stable
+        
+#      - name: SonarCloud Scan
+#        if: github.repository == 'hectorespert/netbeans'
+#        uses: SonarSource/sonarcloud-github-action@v1.1
+#        env:
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
 #  macos:
 #    name: MacOS tests
