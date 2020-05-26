@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/cache@v1
         with:
-          path: ~/.m2/repository
+          path: ~/.hgexternalcache
           key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
           restore-keys: ${{ runner.os }}-
 
@@ -41,9 +41,6 @@ jobs:
         
       - name: Build
         run: ant build
-        
-      - name: Build tests
-        run: ant test -Dtest.includes=NoTestsJustBuild
         
       - name: Test harness modules
         run: |
@@ -142,7 +139,7 @@ jobs:
     steps:
       - uses: actions/cache@v1
         with:
-          path: ~/.m2/repository
+          path: ~/.hgexternalcache
           key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
           restore-keys: ${{ runner.os }}-
 
@@ -169,7 +166,7 @@ jobs:
     steps:
       - uses: actions/cache@v1
         with:
-          path: ~/.m2/repository
+          path: ~/.hgexternalcache
           key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
           restore-keys: ${{ runner.os }}-
 
