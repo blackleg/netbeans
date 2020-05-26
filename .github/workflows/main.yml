@@ -28,6 +28,12 @@ jobs:
     env: 
       OPTS: "-Dtest-unit-sys-prop.ignore.random.failures=true -Dvanilla.javac.exists=true"
     steps:
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
+          restore-keys: ${{ runner.os }}-
+
       - uses: actions/checkout@v2
 
       - name: Clean
@@ -134,6 +140,12 @@ jobs:
     name: MacOS tests
     runs-on: macos-10.15
     steps:
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
+          restore-keys: ${{ runner.os }}-
+
       - uses: actions/checkout@v2
       
       - name: Install ant 
@@ -155,6 +167,12 @@ jobs:
     name: Windows tests
     runs-on: windows-2019
     steps:
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
+          restore-keys: ${{ runner.os }}-
+
       - uses: actions/checkout@v2
       
       - name: Clean
