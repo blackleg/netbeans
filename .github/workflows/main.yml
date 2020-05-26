@@ -20,17 +20,16 @@ name: Netbeans Build
 on:
   push:
   pull_request:
-    branches:
-      - master
 
 jobs:
   linux:
-    name: Linux tests
+    name: Run tests
     runs-on: ubuntu-16.04
     env: 
       OPTS: "-Dtest-unit-sys-prop.ignore.random.failures=true -Dvanilla.javac.exists=true"
     steps:
       - uses: actions/checkout@v2
+
       - name: Clean
         run: ant clean
         
@@ -47,82 +46,82 @@ jobs:
           ant $OPTS -f harness/nbjunit test
           ant $OPTS -f harness/jellytools.platform test -Dtest.config=stable
           
-      - name: Test platform modules
-        run: |
-          ant $OPTS -f platform/api.htmlui test
-          ant $OPTS -f platform/api.intent test
-          ant $OPTS -f platform/api.io test
-          ant $OPTS -f platform/api.progress test
-          ant $OPTS -f platform/api.progress.nb test
-          ant $OPTS -f platform/api.scripting test
-          ant $OPTS -f platform/api.search test
-          ant $OPTS -f platform/api.templates test
-          ant $OPTS -f platform/api.visual test
-          ant $OPTS -f platform/applemenu test
-          ant $OPTS -f platform/autoupdate.cli test
-          ant $OPTS -f platform/autoupdate.services test
-          ant $OPTS -f platform/autoupdate.ui test
-          ant $OPTS -f platform/core.execution test
-          ant $OPTS -f platform/core.io.ui test
-          ant $OPTS -f platform/core.kit test
-          ant $OPTS -f platform/core.multiview test
-          ant $OPTS -f platform/core.netigso test
-          ant $OPTS -f platform/core.network test
-          ant $OPTS -f platform/core.osgi test
-          ant $OPTS -f platform/core.output2 test
-          ant $OPTS -f platform/core.startup test
-          ant $OPTS -f platform/core.startup.base test
-          ant $OPTS -f platform/core.ui test
-          ant $OPTS -f platform/core.windows test
-          ant $OPTS -f platform/editor.mimelookup test
-          ant $OPTS -f platform/editor.mimelookup.impl test
-          ant $OPTS -f platform/favorites test
-          ant $OPTS -f platform/javahelp test-unit
-          ant $OPTS -f platform/keyring.fallback test
-          ant $OPTS -f platform/keyring.impl test
-          ant $OPTS -f platform/lib.uihandler test
-          ant $OPTS -f platform/libs.javafx test
-          ant $OPTS -f platform/masterfs test
-          ant $OPTS -f platform/masterfs.linux test
-          ant $OPTS -f platform/netbinox test  -Dtest.config=stableBTD
-          ant $OPTS -f platform/o.n.bootstrap test
-          ant $OPTS -f platform/o.n.core test-unit
-          ant $OPTS -f platform/o.n.swing.outline test
-          ant $OPTS -f platform/o.n.swing.tabcontrol test
-          ant $OPTS -f platform/openide.actions test
-          ant $OPTS -f platform/openide.awt test
-          ant $OPTS -f platform/openide.compat test
-          ant $OPTS -f platform/openide.dialogs test
-          ant $OPTS -f platform/openide.execution test
-          ant $OPTS -f platform/openide.execution.compat8 test
-          ant $OPTS -f platform/openide.explorer test
-          ant $OPTS -f platform/openide.filesystems test
-          ant $OPTS -f platform/openide.filesystems.compat8 test
-          ant $OPTS -f platform/openide.filesystems.nb test
-          ant $OPTS -f platform/openide.io test
-          ant $OPTS -f platform/openide.loaders test
-          ant $OPTS -f platform/openide.modules test
-          ant $OPTS -f platform/openide.nodes test
-          ant $OPTS -f platform/openide.options test
-          ant $OPTS -f platform/openide.text test
-          ant $OPTS -f platform/openide.util test
-          ant $OPTS -f platform/openide.util.enumerations test
-          ant $OPTS -f platform/openide.util.lookup test
-          ant $OPTS -f platform/openide.util.ui test
-          ant $OPTS -f platform/openide.windows test
-          ant $OPTS -f platform/options.api test-unit
-          ant $OPTS -f platform/options.keymap test
-          ant $OPTS -f platform/print test
-          ant $OPTS -f platform/progress.ui test
-          ant $OPTS -f platform/queries test
-          ant $OPTS -f platform/sampler test
-          ant $OPTS -f platform/sendopts test
-          ant $OPTS -f platform/settings test
-          ant $OPTS -f platform/spi.actions test
-          ant $OPTS -f platform/spi.quicksearch test
-          ant $OPTS -f platform/templates test
-          ant $OPTS -f platform/templatesui test
-          ant $OPTS -f platform/uihandler test
+#      - name: Test platform modules
+#        run: |
+#          ant $OPTS -f platform/api.htmlui test
+#          ant $OPTS -f platform/api.intent test
+#          ant $OPTS -f platform/api.io test
+#          ant $OPTS -f platform/api.progress test
+#          ant $OPTS -f platform/api.progress.nb test
+#          ant $OPTS -f platform/api.scripting test
+#          ant $OPTS -f platform/api.search test
+#          ant $OPTS -f platform/api.templates test
+#          ant $OPTS -f platform/api.visual test
+#          ant $OPTS -f platform/applemenu test
+#          ant $OPTS -f platform/autoupdate.cli test
+#          ant $OPTS -f platform/autoupdate.services test
+#          ant $OPTS -f platform/autoupdate.ui test
+#          ant $OPTS -f platform/core.execution test
+#          ant $OPTS -f platform/core.io.ui test
+#          ant $OPTS -f platform/core.kit test
+#          ant $OPTS -f platform/core.multiview test
+#          ant $OPTS -f platform/core.netigso test
+#          ant $OPTS -f platform/core.network test
+#          ant $OPTS -f platform/core.osgi test
+#          ant $OPTS -f platform/core.output2 test
+#          ant $OPTS -f platform/core.startup test
+#          ant $OPTS -f platform/core.startup.base test
+#          ant $OPTS -f platform/core.ui test
+#          ant $OPTS -f platform/core.windows test
+#          ant $OPTS -f platform/editor.mimelookup test
+#          ant $OPTS -f platform/editor.mimelookup.impl test
+#          ant $OPTS -f platform/favorites test
+#          ant $OPTS -f platform/javahelp test-unit
+#          ant $OPTS -f platform/keyring.fallback test
+#          ant $OPTS -f platform/keyring.impl test
+#          ant $OPTS -f platform/lib.uihandler test
+#          ant $OPTS -f platform/libs.javafx test
+#          ant $OPTS -f platform/masterfs test
+#          ant $OPTS -f platform/masterfs.linux test
+#          ant $OPTS -f platform/netbinox test  -Dtest.config=stableBTD
+#          ant $OPTS -f platform/o.n.bootstrap test
+#          ant $OPTS -f platform/o.n.core test-unit
+#          ant $OPTS -f platform/o.n.swing.outline test
+#          ant $OPTS -f platform/o.n.swing.tabcontrol test
+#          ant $OPTS -f platform/openide.actions test
+#          ant $OPTS -f platform/openide.awt test
+#          ant $OPTS -f platform/openide.compat test
+#          ant $OPTS -f platform/openide.dialogs test
+#          ant $OPTS -f platform/openide.execution test
+#          ant $OPTS -f platform/openide.execution.compat8 test
+#          ant $OPTS -f platform/openide.explorer test
+#          ant $OPTS -f platform/openide.filesystems test
+#          ant $OPTS -f platform/openide.filesystems.compat8 test
+#          ant $OPTS -f platform/openide.filesystems.nb test
+#          ant $OPTS -f platform/openide.io test
+#          ant $OPTS -f platform/openide.loaders test
+#          ant $OPTS -f platform/openide.modules test
+#          ant $OPTS -f platform/openide.nodes test
+#          ant $OPTS -f platform/openide.options test
+#          ant $OPTS -f platform/openide.text test
+#          ant $OPTS -f platform/openide.util test
+#          ant $OPTS -f platform/openide.util.enumerations test
+#          ant $OPTS -f platform/openide.util.lookup test
+#          ant $OPTS -f platform/openide.util.ui test
+#          ant $OPTS -f platform/openide.windows test
+#          ant $OPTS -f platform/options.api test-unit
+#          ant $OPTS -f platform/options.keymap test
+#          ant $OPTS -f platform/print test
+#          ant $OPTS -f platform/progress.ui test
+#          ant $OPTS -f platform/queries test
+#          ant $OPTS -f platform/sampler test
+#          ant $OPTS -f platform/sendopts test
+#          ant $OPTS -f platform/settings test
+#          ant $OPTS -f platform/spi.actions test
+#          ant $OPTS -f platform/spi.quicksearch test
+#          ant $OPTS -f platform/templates test
+#          ant $OPTS -f platform/templatesui test
+#          ant $OPTS -f platform/uihandler test
         
 #      - name: SonarCloud Scan
 #        if: github.repository == 'hectorespert/netbeans'
@@ -136,7 +135,9 @@ jobs:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
-      - run: brew install ant
+      
+      - name: Install ant 
+        run: brew install ant
 
       - name: Clean
         run: ant clean
@@ -144,19 +145,23 @@ jobs:
       - name: Build
         run: ant build
 
-      - name: Tests
-        run: |
-          ant -f platform/masterfs.macosx test
-          ant -f platform/core.network test
+      - name: Test platform/masterfs.macosx
+        run: ant -f platform/masterfs.macosx test
+        
+      - name: Test platform/core.network
+        run: ant -f platform/core.network test
 
   windows:
     name: Windows tests
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
+      
       - name: Clean
         run: ant clean
+        
       - name: Build
         run: ant build
+        
       - name: Tests
         run: ant -f platform/masterfs.windows test
