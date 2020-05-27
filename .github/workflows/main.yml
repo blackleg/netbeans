@@ -25,8 +25,6 @@ jobs:
   linux:
     name: Run tests
     runs-on: ubuntu-16.04
-    env: 
-      OPTS: "-Dtest-unit-sys-prop.ignore.random.failures=true -Dvanilla.javac.exists=true"
     steps:
       - uses: actions/cache@v1
         with:
@@ -44,10 +42,10 @@ jobs:
         
       - name: Test harness modules
         run: |
-          ant $OPTS -f harness/o.n.insane test
-          ant $OPTS -f harness/apisupport.harness test
-          ant $OPTS -f harness/nbjunit test
-          ant $OPTS -f harness/jellytools.platform test -Dtest.config=stable
+          ant -Dtest-unit-sys-prop.ignore.random.failures=true -f harness/o.n.insane test
+          ant -Dtest-unit-sys-prop.ignore.random.failures=true -f harness/apisupport.harness test
+          ant -Dtest-unit-sys-prop.ignore.random.failures=true -f harness/nbjunit test
+          ant -Dtest-unit-sys-prop.ignore.random.failures=true -f harness/jellytools.platform test -Dtest.config=stable
           
 #      - name: Test platform modules
 #        run: |
