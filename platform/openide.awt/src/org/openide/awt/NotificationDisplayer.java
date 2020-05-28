@@ -325,7 +325,7 @@ public abstract class NotificationDisplayer {
             return notify( title, priority );
         }
 
-        private Notification notify( String text, Priority priority ) {
+        private Notification notify(String text, Priority priority) {
             int importance = 1;
             switch( priority ) {
                 case HIGH:
@@ -340,21 +340,34 @@ public abstract class NotificationDisplayer {
                     break;
             }
             Message msg = StatusDisplayer.getDefault().setStatusText( text, importance );
-            return new NotificationImpl(msg);
+            return new NotificationImpl(msg, priority);
         }
     }
 
     private static class NotificationImpl extends Notification {
 
         private final Message msg;
+        
+        private final Priority priority;
 
-        public NotificationImpl( Message msg ) {
+        public NotificationImpl(Message msg, Priority priority) {
             this.msg = msg;
+            this.priority = priority;
         }
 
         @Override
         public void clear() {
             msg.clear(0);
+        }
+
+        @Override
+        public Priority getPriority() {
+            return priority;
+        }
+
+        @Override
+        public Category getCategory() {
+            return Category.INFO;
         }
     }
 }
