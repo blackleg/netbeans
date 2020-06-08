@@ -22,10 +22,21 @@ on:
   pull_request:
 
 jobs:
-  windows:
-    name: Windows build
-    runs-on: windows-2019
+  linux:
+    name: Linux build
+    runs-on: ubuntu-18.04
+    env:
+      DISPLAY: ":99.0"
     steps:
+      - name: Setup Java with 
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk+fx
+
+      - name: Launch Xvfb
+        run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -38,9 +49,103 @@ jobs:
 
       - name: Clean
         run: ant clean
+
+      - name: Build
+        run: ant build
+
+      - name: Test harness modules
+        run: ant test-unit -Dtest.modules=harness/*
+
+      - name: Test platform modules
+        run: ant test-unit -Dtest.modules=platform/*
+
+      - name: Test nb modules
+        run: ant test-unit -Dtest.modules=nb/* -Dtest.modules.exclude=nb/ide.launcher
+
+      - name: Test extide modules
+        run: ant test-unit -Dtest.modules=extide/*
         
+  macos:
+    name: MacOS build
+    runs-on: macos-10.15
+    steps:
+      - name: Setup Java with 
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk+fx
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Caching dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.hgexternalcache
+            ~/Library/Caches/Homebrew
+          key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
+          restore-keys: ${{ runner.os }}-
+
+      - name: Install ant
+        run: brew install ant
+
+      - name: Clean
+        run: ant clean
+
+      - name: Build
+        run: ant build
+
+      - name: Test harness modules
+        run: ant test-unit -Dtest.modules=harness/*
+
+      - name: Test platform modules
+        run: ant test-unit -Dtest.modules=platform/*
+
+      - name: Test nb modules
+        run: ant test-unit -Dtest.modules=nb/* -Dtest.modules.exclude=nb/ide.launcher
+
+      - name: Test extide modules
+        run: ant test-unit -Dtest.modules=extide/*
+
+  windows:
+    name: Windows build
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+      - name: Setup Java with 
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk+fx
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Caching dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.hgexternalcache
+          key: ${{ runner.os }}-${{ hashFiles('**/external/binaries-list') }}
+          restore-keys: ${{ runner.os }}-
+
+      - name: Clean
+        run: ant clean
+
       - name: Build
         run: ant build
         
-      - name: Test
-        run: ant -f platform/core.network test
+      - name: Test harness modules
+        run: ant test-unit "-Dtest.modules=harness/*"
+
+      - name: Test platform modules
+        run: ant test-unit "-Dtest.modules=platform/*"
+
+      - name: Test nb modules
+        run: ant test-unit "-Dtest.modules=nb/*" -Dtest.modules.exclude=nb/ide.launcher
+
+      - name: Test extide modules
+        run: ant test-unit "-Dtest.modules=extide/*"

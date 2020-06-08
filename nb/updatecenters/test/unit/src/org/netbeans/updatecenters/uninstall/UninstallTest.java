@@ -31,6 +31,7 @@ import org.netbeans.api.autoupdate.UpdateManager;
 import org.netbeans.api.autoupdate.UpdateUnit;
 import org.netbeans.junit.NbTestSuite;
 import org.netbeans.junit.NbTestCase;
+import org.netbeans.junit.RandomlyFails;
 import org.netbeans.updatecenters.CountsStruct;
 import org.netbeans.updatecenters.OperationUtils;
 
@@ -38,6 +39,7 @@ import org.netbeans.updatecenters.OperationUtils;
  *
  * @author Jaromir.Uhrik@Sun.Com
  */
+@RandomlyFails
 public class UninstallTest extends NbTestCase {
 
     private static final String TEST_UNINSTALL_PLUGINS_EMPTY = "testUninstallPluginsEmpty";

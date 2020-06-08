@@ -25,12 +25,14 @@ import org.netbeans.api.autoupdate.UpdateManager;
 import org.netbeans.api.autoupdate.UpdateUnit;
 import org.netbeans.junit.NbTestSuite;
 import org.netbeans.junit.NbTestCase;
+import org.netbeans.junit.RandomlyFails;
 import org.netbeans.updatecenters.OperationUtils;
 
 /**
  *
  * @author Jaromir.Uhrik@Sun.Com
  */
+@RandomlyFails
 public class ValidateUninstallTest extends NbTestCase {
 
     private static final String TEST_INSTALLED_PLUGINS_EMPTY = "testInstalledPluginsEmpty";
