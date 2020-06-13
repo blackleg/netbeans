@@ -55,6 +55,9 @@ jobs:
 
       - name: Test harness modules
         run: ant test-unit -Dtest.modules=harness/*
+        
+      - name: Test platform modules
+        run: ant test-unit -Dtest.modules=platform/*
 
   macos:
     name: MacOS build
