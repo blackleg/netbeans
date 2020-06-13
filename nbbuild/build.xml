@@ -2036,7 +2036,7 @@ It is possible to use -Ddebug.port=3234 -Ddebug.pause=y to start the system in d
         <property name="test.modules" value="${allmodules}"/>
         <property name="test.type" value="test"/>
         <subant target="${test.type}" >
-            <property name="vanilla.javac.exists" value="true"/>
+            <property name="continue.after.failing.tests" value="true"/>
             <dirset dir=".." includes="${test.modules}"/>
         </subant>
     </target>
@@ -2045,7 +2045,7 @@ It is possible to use -Ddebug.port=3234 -Ddebug.pause=y to start the system in d
         <property name="test.modules" value="${allmodules}"/>
         <property name="test.modules.exclude" value=""/>
         <subant target="test-unit">
-            <property name="continue.after.failing.tests" value="true"/>
+            <property name="vanilla.javac.exists" value="true"/>
             <property name="test-unit-sys-prop.ignore.random.failures" value="true"/>
             <dirset dir=".." includes="${test.modules}" excludes="${test.modules.exclude}"/>
         </subant>
