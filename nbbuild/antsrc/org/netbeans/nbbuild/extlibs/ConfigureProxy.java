@@ -26,8 +26,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -42,6 +40,8 @@ public final class ConfigureProxy extends Task {
     private URL connectTo;
     private String hostProperty = "http.proxyHost";
     private String portProperty = "http.proxyPort";
+    
+    private boolean failOnError = false;
 
     public void setConnectTo(String uri) throws MalformedURLException {
         connectTo = new URL(uri);
@@ -54,6 +54,10 @@ public final class ConfigureProxy extends Task {
     public void setPortProperty(String port) {
         portProperty = port;
     }
+    
+    public void setFailOnError(String failOnError) {
+        this.failOnError = Boolean.parseBoolean(failOnError);
+    }
 
     @Override
     public void execute() throws BuildException {
@@ -61,10 +65,15 @@ public final class ConfigureProxy extends Task {
             URI[] connectedVia = { null };
             URLConnection connect = openConnection(this, connectTo, connectedVia);
             if (connect == null) {
-                throw new BuildException("Cannot connect to " + connectTo);
+                String errorMessage = String.format("Cannot connect to %s", connectTo);
+                if (failOnError) {
+                    throw new BuildException(errorMessage);
+                } else {
+                    log(errorMessage, Project.MSG_ERR);
+                }
             }
 
-            if (connectedVia[0] != null) {
+            if (connect != null && connectedVia[0] != null) {
                 final String host = connectedVia[0].getHost();
                 log(String.format("Setting %s to %s", hostProperty, host), Project.MSG_INFO);
                 getProject().setUserProperty(hostProperty, host);
@@ -76,8 +85,14 @@ public final class ConfigureProxy extends Task {
                 getProject().setUserProperty(hostProperty, "");
                 getProject().setUserProperty(portProperty, "80");
             }
-        } catch (IOException ex) {
-            throw new BuildException(ex);
+        } catch (IOException exception) {
+            if (failOnError) {
+                throw new BuildException(exception);
+            } else {
+                log(exception, Project.MSG_ERR);
+                getProject().setUserProperty(hostProperty, "");
+                getProject().setUserProperty(portProperty, "80");
+            }
         }
     }
 
