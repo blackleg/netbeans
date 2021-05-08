@@ -78,7 +78,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.text.JTextComponent;
 import org.netbeans.modules.options.CategoryModel.Category;
 import org.netbeans.modules.options.advanced.AdvancedPanel;
@@ -118,7 +117,6 @@ public class OptionsPanel extends JPanel {
 
     private Map<String, CategoryButton> buttons = new LinkedHashMap<String, CategoryButton>();    
     private final boolean isMac = UIManager.getLookAndFeel ().getID ().equals ("Aqua");
-    private final boolean isMetal = UIManager.getLookAndFeel() instanceof MetalLookAndFeel;
     private final Color selected = isMac ? new Color(221, 221, 221) : getSelectionBackground();
     private final Color selectedB = isMac ? new Color(183, 183, 183) : getUIColorOrDefault("nb.options.categories.selectionBorderColor", new Color (149, 106, 197));
     private final Color highlighted = isMac ? new Color(221, 221, 221) : getHighlightBackground();
@@ -1027,7 +1025,7 @@ public class OptionsPanel extends JPanel {
      * @return boolean
      */
     private boolean useUIDefaultsColors() {
-        return isMetal || UIManager.getBoolean("Nb.options.useUIDefaultsColors"); //NOI18N
+        return UIManager.getBoolean("Nb.options.useUIDefaultsColors"); //NOI18N
     }
 
     private Color getUIColorOrDefault(String uiKey, Color defaultColor) {
