@@ -118,7 +118,6 @@ public class OptionsPanel extends JPanel {
 
     private Map<String, CategoryButton> buttons = new LinkedHashMap<String, CategoryButton>();    
     private final boolean isMac = UIManager.getLookAndFeel ().getID ().equals ("Aqua");
-    private final boolean isNimbus = UIManager.getLookAndFeel ().getID ().equals ("Nimbus");
     private final boolean isMetal = UIManager.getLookAndFeel() instanceof MetalLookAndFeel;
     private final Color selected = isMac ? new Color(221, 221, 221) : getSelectionBackground();
     private final Color selectedB = isMac ? new Color(183, 183, 183) : getUIColorOrDefault("nb.options.categories.selectionBorderColor", new Color (149, 106, 197));
@@ -872,7 +871,7 @@ public class OptionsPanel extends JPanel {
                 
     private CategoryButton addButton (CategoryModel.Category category) {
         int index = buttons.size ();
-        CategoryButton button = isNimbus || UIManager.getBoolean("Nb.options.categories.button.useNimbusCategoryButton") //NOI18N
+        CategoryButton button = UIManager.getBoolean("Nb.options.categories.button.useNimbusCategoryButton") //NOI18N
                 ? new NimbusCategoryButton(category)
                 : new CategoryButton(category);
 
@@ -1028,7 +1027,7 @@ public class OptionsPanel extends JPanel {
      * @return boolean
      */
     private boolean useUIDefaultsColors() {
-        return isMetal || isNimbus || UIManager.getBoolean("Nb.options.useUIDefaultsColors"); //NOI18N
+        return isMetal || UIManager.getBoolean("Nb.options.useUIDefaultsColors"); //NOI18N
     }
 
     private Color getUIColorOrDefault(String uiKey, Color defaultColor) {
